@@ -1,0 +1,24 @@
+{
+  "name": "flowscript",
+  "version": "1.0.0",
+  "description": "For OpenAPI to Newman and Create Test Flow",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wangyuche/FlowScript.git"
+  },
+  "keywords": [
+    "openapi"
+  ],
+  "author": "wangyuche",
+  "bugs": {
+    "url": "https://github.com/wangyuche/FlowScript/issues"
+  },
+  "homepage": "https://github.com/wangyuche/FlowScript#readme",
+  "dependencies": {
+    "openapi-to-postmanv2": "^4.23.1"
+  }
+}
