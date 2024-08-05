@@ -50,6 +50,8 @@ function CreateFlow() {
             if (!conversionResult.result) {
                 console.log('Could not convert', conversionResult.reason);
             }
+            conversionResult.output[0].data.info.name = flow.Setting.Describe;
+            conversionResult.output[0].data.info.description.content = flow.Setting.Describe;
             const items = conversionResult.output[0].data.item[0].item
             for (const item of items) {
                 _url = "";
