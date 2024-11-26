@@ -52,7 +52,7 @@ function CreateFlow() {
             }
             conversionResult.output[0].data.info.name = flow.Setting.Describe;
             conversionResult.output[0].data.info.description.content = flow.Setting.Describe;
-            const items = conversionResult.output[0].data.item[0].item
+            const items = conversionResult.output[0].data.item[0].item === undefined ? conversionResult.output[0].data.item : conversionResult.output[0].data.item[0].item
             for (const item of items) {
                 _url = "";
                 item.request.url.path.forEach((u) => {
@@ -64,14 +64,21 @@ function CreateFlow() {
                 });
                 APIs[_url] = item;
             };
-            conversionResult.output[0].data.item[0].item = [];
+            var item = [];
             for (i = 0; i < flow.Setting.Flow.length; i++) {
-                conversionResult.output[0].data.item[0].item[i] = {};
-                conversionResult.output[0].data.item[0].item[i] = JSON.parse(JSON.stringify(APIs[flow.Setting.Flow[i].API]));
-                conversionResult.output[0].data.item[0].item[i].event[0] = { "listen": "test", "script": { "exec": [] }, "type": "text/javascript", "packages": {} };
-                for (var s of flow.Setting.Flow[i].Scripts) {
-                    conversionResult.output[0].data.item[0].item[i].event[0].script.exec.push(flow.Setting.Scripts[s].Data);
-                };
+                item[i] = {};
+                if (APIs[flow.Setting.Flow[i].API] !== undefined) {
+                    item[i] = JSON.parse(JSON.stringify(APIs[flow.Setting.Flow[i].API]));
+                    item[i].event[0] = { "listen": "test", "script": { "exec": [] }, "type": "text/javascript", "packages": {} };
+                    for (var s of flow.Setting.Flow[i].Scripts) {
+                        item[i].event[0].script.exec.push(flow.Setting.Scripts[s].Data);
+                    };
+                }
+            }
+            if (conversionResult.output[0].data.item[0].item === undefined) {
+                conversionResult.output[0].data.item = item
+            } else {
+                conversionResult.output[0].data.item[0].item = item
             }
             fs.writeFile(outputFile, JSON.stringify(conversionResult.output[0].data, null, 2), err => {
                 if (err) {

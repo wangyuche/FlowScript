@@ -1,6 +1,6 @@
 {
   "name": "openapi-flowscript",
-  "version": "1.0.2",
+  "version": "1.0.4",
   "description": "For OpenAPI to Newman and Create Test Flow",
   "main": "main.js",
   "bin": {
