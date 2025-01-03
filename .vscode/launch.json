@@ -16,7 +16,7 @@
                 "-o",
                 "config/test.json",
                 "-s",
-                "config/openapi.yaml",
+                "openapi/tokenguidenew.yaml openapi/slotgame7.yaml",
                 "-f",
                 "config/testflow.yaml"
             ]
