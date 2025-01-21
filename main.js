@@ -5,7 +5,7 @@ const fs = require('fs'),
     Converter = require('openapi-to-postmanv2'),
     yaml = require('js-yaml');
 program
-    .version('1.0.6')
+    .version('1.0.7')
     .description('For OpenAPI to Newman and Create Test Flow')
     .option('-o, --output <file>', 'output file')
     .option('-f, --flow <file>', 'test flow file')
@@ -133,11 +133,13 @@ function CreateFlow() {
                     }
                 }
             }
-            var variable = [];
-            for (i = 0; i < flow.Setting.Variable.length; i++) {
-                variable[i] = { type: flow.Setting.Variable[i].type, value: flow.Setting.Variable[i].value, key: flow.Setting.Variable[i].key };
+            if (flow.Setting.Variable !== undefined) {
+                var variable = [];
+                for (i = 0; i < flow.Setting.Variable.length; i++) {
+                    variable[i] = { type: flow.Setting.Variable[i].type, value: flow.Setting.Variable[i].value, key: flow.Setting.Variable[i].key };
+                }
+                conversionResult.output[0].data.variable = variable;
             }
-            conversionResult.output[0].data.variable = variable;
             // if (conversionResult.output[0].data.item[0].item === undefined) {
             conversionResult.output[0].data.item = item
             // } else {
