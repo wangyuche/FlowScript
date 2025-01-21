@@ -5,7 +5,7 @@ const fs = require('fs'),
     Converter = require('openapi-to-postmanv2'),
     yaml = require('js-yaml');
 program
-    .version('1.0.0')
+    .version('1.0.6')
     .description('For OpenAPI to Newman and Create Test Flow')
     .option('-o, --output <file>', 'output file')
     .option('-f, --flow <file>', 'test flow file')
@@ -44,7 +44,7 @@ function CreateFlow() {
                 process.exit(1);
             }
         } else {
-            sourceFile = fs.readFileSync(options.source, { encoding: 'UTF8' });
+            sourceFile = fs.readFileSync(options.source[0], { encoding: 'UTF8' });
         }
     } else {
         console.error("Please use the -s option to specify the source file.");
