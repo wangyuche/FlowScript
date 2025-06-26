@@ -5,7 +5,7 @@ const fs = require('fs'),
     Converter = require('openapi-to-postmanv2'),
     yaml = require('js-yaml');
 program
-    .version('1.0.8')
+    .version('1.0.10')
     .description('For OpenAPI to Newman and Create Test Flow')
     .option('-o, --output <file>', 'output file')
     .option('-f, --flow <file>', 'test flow file')
@@ -105,7 +105,17 @@ function CreateFlow() {
                     item[i] = JSON.parse(JSON.stringify(APIs[flow.Setting.Flow[i].API]));
                     item[i].event[0] = { "listen": "test", "script": { "exec": [] }, "type": "text/javascript", "packages": {} };
                     for (var s of flow.Setting.Flow[i].Scripts) {
-                        item[i].event[0].script.exec.push(flow.Setting.Scripts[s].Data);
+                        if (typeof s === 'object') {
+                            const keyName = Object.keys(s)[0];
+                            const arr = s[keyName];
+                            for (var key of arr) {
+                                var _c = flow.Setting.Scripts[keyName].Data;
+                                _c = _c.replaceAll(key.Key, key.Value);
+                                item[i].event[0].script.exec.push(_c);
+                            }
+                        }else{
+                            item[i].event[0].script.exec.push(flow.Setting.Scripts[s].Data);
+                        }
                     };
                     _path = [];
                     item[i].request.url.path.forEach((u) => {
